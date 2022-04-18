@@ -54,8 +54,8 @@ new_menu_item (const char       *short_name,
 
 GList*
 get_background_items (NautilusMenuProvider *provider,
-                      GtkWidget *window,
-                      NautilusFileInfo *currnet_folder)
+                      GtkWidget            *window,
+                      NautilusFileInfo     *currnet_folder)
 {
     GList *items = NULL;
 
@@ -166,9 +166,26 @@ get_background_items (NautilusMenuProvider *provider,
     return items;
 }
 
+GList*
+get_file_items (NautilusMenuProvider *provider,
+                GtkWidget            *window,
+                GList                *files)
+{
+    if (g_list_length(files) == 1)
+    {
+        NautilusFileInfo *selected_file = files->data; // get first element of the list 'files'
+        if (nautilus_file_info_is_directory(selected_file))
+        {
+            return get_background_items(provider, window, selected_file);
+        }
+    }
+    return (GList *) NULL;
+}
+
 static void
 menu_provider_iface_init (NautilusMenuProviderInterface *iface)
 {
+    iface->get_file_items       = get_file_items;
     iface->get_background_items = get_background_items;
 }
 
