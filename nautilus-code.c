@@ -24,18 +24,23 @@ run_command (NautilusMenuItem *item,
 static NautilusMenuItem*
 new_menu_item (const char       *short_name,
                const char       *full_name,
-               const char       *command,
-               NautilusFileInfo *current_folder)
+               const char       *command_start,
+               NautilusFileInfo *folder,
+               const char        selected)
 {
-        GFile *folder_file = nautilus_file_info_get_location (current_folder);
+        GFile *folder_file = nautilus_file_info_get_location (folder);
         const char *folder_path = g_file_get_path (folder_file);
 
-        GString *command_string = g_string_new(command);
-        command_string = g_string_append(command_string, " ");
-        command_string = g_string_append(command_string, folder_path);
+        GString *command = g_string_new(command_start);
+        command = g_string_append(command, " ");
+        command = g_string_append(command, folder_path);
 
         GString *item_name = g_string_new("NautilusCode::");
         item_name = g_string_append(item_name, short_name);
+        if (selected)
+        {
+            item_name = g_string_append(item_name, "::Selected");
+        }
 
         GString *label = g_string_new("Open in ");
         label = g_string_append(label, short_name);
@@ -48,14 +53,13 @@ new_menu_item (const char       *short_name,
                                                         tip->str,
                                                         NULL
                                                        );
-        g_signal_connect (item, "activate", G_CALLBACK(run_command), command_string->str);
+        g_signal_connect (item, "activate", G_CALLBACK(run_command), command->str);
         return item;
 }
 
-GList*
-get_background_items (NautilusMenuProvider *provider,
-                      GtkWidget            *window,
-                      NautilusFileInfo     *currnet_folder)
+static GList*
+get_menu_items (NautilusFileInfo *folder,
+                const char        selected)
 {
     GList *items = NULL;
 
@@ -75,45 +79,45 @@ get_background_items (NautilusMenuProvider *provider,
     {
         if (code_oss_flatpak_path != NULL)
         {
-            items = g_list_append (items, new_menu_item ("Code-OSS (native)", "Code - OSS (native)", "code-oss", currnet_folder) );
-            items = g_list_append (items, new_menu_item ("Code-OSS (flatpak)", "Code - OSS (flatpak)", "com.visualstudio.code-oss", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("Code-OSS (native)", "Code - OSS (native)", "code-oss", folder, selected) );
+            items = g_list_append (items, new_menu_item ("Code-OSS (flatpak)", "Code - OSS (flatpak)", "com.visualstudio.code-oss", folder, selected) );
         }
         else
         {
-            items = g_list_append (items, new_menu_item ("Code-OSS", "Code - OSS", "code-oss", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("Code-OSS", "Code - OSS", "code-oss", folder, selected) );
         }
 
         if (vscode_flatpak_path != NULL)
         {
-            items = g_list_append (items, new_menu_item ("VSCode", "Visual Studio Code", "com.visualstudio.code", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("VSCode", "Visual Studio Code", "com.visualstudio.code", folder, selected) );
         }
     }
     else if (code_path != NULL)
     {
         if (vscode_flatpak_path != NULL)
         {
-            items = g_list_append (items, new_menu_item ("VSCode (native)", "Visual Studio Code (native)", "code", currnet_folder) );
-            items = g_list_append (items, new_menu_item ("VSCode (flatpak)", "Visual Studio Code (flatpak)", "com.visualstudio.code", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("VSCode (native)", "Visual Studio Code (native)", "code", folder, selected) );
+            items = g_list_append (items, new_menu_item ("VSCode (flatpak)", "Visual Studio Code (flatpak)", "com.visualstudio.code", folder, selected) );
         }
         else
         {
-            items = g_list_append (items, new_menu_item ("VSCode", "Visual Studio Code", "code", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("VSCode", "Visual Studio Code", "code", folder, selected) );
         }
 
         if (code_oss_flatpak_path != NULL)
         {
-            items = g_list_append (items, new_menu_item ("Code-OSS", "Code - OSS", "com.visualstudio.code-oss", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("Code-OSS", "Code - OSS", "com.visualstudio.code-oss", folder, selected) );
         }
     }
     else
     {
         if (vscode_flatpak_path != NULL)
         {
-            items = g_list_append (items, new_menu_item ("VSCode", "Visual Studio Code", "com.visualstudio.code", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("VSCode", "Visual Studio Code", "com.visualstudio.code", folder, selected) );
         }
         if (code_oss_flatpak_path != NULL)
         {
-            items = g_list_append (items, new_menu_item ("Code-OSS", "Code - OSS", "com.visualstudio.code-oss", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("Code-OSS", "Code - OSS", "com.visualstudio.code-oss", folder, selected) );
         }
     }
 
@@ -121,49 +125,58 @@ get_background_items (NautilusMenuProvider *provider,
     {
         if (vscodium_flatpak_path != NULL)
         {
-            items = g_list_append (items, new_menu_item ("VSCodium (native)", "Visual Studio Codium (native)", "vscodium", currnet_folder) );
-            items = g_list_append (items, new_menu_item ("VSCodium (flatpak)", "Visual Studio Codium (flatpak)", "com.vscodium.codium", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("VSCodium (native)", "Visual Studio Codium (native)", "vscodium", folder, selected) );
+            items = g_list_append (items, new_menu_item ("VSCodium (flatpak)", "Visual Studio Codium (flatpak)", "com.vscodium.codium", folder, selected) );
         }
         else
         {
-            items = g_list_append (items, new_menu_item ("VSCodium", "Visual Studio Codium", "vscodium", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("VSCodium", "Visual Studio Codium", "vscodium", folder, selected) );
         }
     }
     else if (codium_path != NULL)
     {
         if (vscodium_flatpak_path != NULL)
         {
-            items = g_list_append (items, new_menu_item ("VSCodium (native)", "Visual Studio Codium (native)", "codium", currnet_folder) );
-            items = g_list_append (items, new_menu_item ("VSCodium (flatpak)", "Visual Studio Codium (flatpak)", "com.vscodium.codium", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("VSCodium (native)", "Visual Studio Codium (native)", "codium", folder, selected) );
+            items = g_list_append (items, new_menu_item ("VSCodium (flatpak)", "Visual Studio Codium (flatpak)", "com.vscodium.codium", folder, selected) );
         }
         else
         {
-            items = g_list_append (items, new_menu_item ("VSCodium", "Visual Studio Codium", "codium", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("VSCodium", "Visual Studio Codium", "codium", folder, selected) );
         }
     }
     else if (vscodium_flatpak_path != NULL)
     {
-        items = g_list_append (items, new_menu_item ("VSCodium", "Visual Studio Codium", "com.vscodium.codium", currnet_folder) );
+        items = g_list_append (items, new_menu_item ("VSCodium", "Visual Studio Codium", "com.vscodium.codium", folder, selected) );
     }
 
     if (gnome_builder_path != NULL)
     {
         if (gnome_builder_flatpak_path != NULL)
         {
-            items = g_list_append (items, new_menu_item ("Builder (native)", "GNOME Builder (native)", "gnome-builder --project", currnet_folder) );
-            items = g_list_append (items, new_menu_item ("Builder (flatpak)", "GNOME Builder (flatpak)", "org.gnome.Builder --project", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("Builder (native)", "GNOME Builder (native)", "gnome-builder --project", folder, selected) );
+            items = g_list_append (items, new_menu_item ("Builder (flatpak)", "GNOME Builder (flatpak)", "org.gnome.Builder --project", folder, selected) );
         }
         else
         {
-            items = g_list_append (items, new_menu_item ("Builder", "GNOME Builder", "gnome-builder --project", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("Builder", "GNOME Builder", "gnome-builder --project", folder, selected) );
         }
     }
     else if (gnome_builder_flatpak_path != NULL)
     {
-        items = g_list_append (items, new_menu_item ("Builder", "GNOME Builder", "org.gnome.Builder --project", currnet_folder) );
+        items = g_list_append (items, new_menu_item ("Builder", "GNOME Builder", "org.gnome.Builder --project", folder, selected) );
     }
 
     return items;
+}
+
+GList*
+get_background_items (NautilusMenuProvider *provider,
+                      GtkWidget            *window,
+                      NautilusFileInfo     *current_folder)
+{
+    const char selected = FALSE;
+    return get_menu_items (current_folder, selected);
 }
 
 GList*
@@ -171,12 +184,14 @@ get_file_items (NautilusMenuProvider *provider,
                 GtkWidget            *window,
                 GList                *files)
 {
+    const char selected = TRUE;
+
     if (g_list_length(files) == 1)
     {
-        NautilusFileInfo *selected_file = files->data; // get first element of the list 'files'
+        NautilusFileInfo *selected_file = g_list_first(files)->data; // get first element of the list 'files'
         if (nautilus_file_info_is_directory(selected_file))
         {
-            return get_background_items(provider, window, selected_file);
+            return get_menu_items (selected_file, selected);
         }
     }
     return (GList *) NULL;
