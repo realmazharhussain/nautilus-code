@@ -1,7 +1,7 @@
 # nautilus-code
-An extension for Nautilus (GNOME Files) File Manager which adds right-click menu options to open current folder in VSCode or GNOME Builder (only if they are installed)
+An extension for Nautilus (GNOME Files) File Manager which adds right-click menu options to open current/selected folder in Code Editors and IDEs like VSCode or GNOME Builder (if they are installed)
 
-## How to install/use?
+## How to install?
 
 ### On ArchLinux/Manjaro (and other ArchLinux-based distributions)
 This nautilus extension is available in the AUR as [nautilus-code](https://aur.archlinux.org/packages/nautilus-code) and [nautilus-code-git](https://aur.archlinux.org/packages/nautilus-code-git). Use your favorite AUR helper to install it.
@@ -16,3 +16,19 @@ This nautilus extension is available in the AUR as [nautilus-code](https://aur.a
   meson build
   sudo meson install -C build
   ```
+
+**Note:** To uninstall (if installed manually) just remove the file `/usr/lib/nautilus/extensions-3.0/libnautilus-code.so`.
+
+## Supported Code Editors and IDEs
+
+### Currently Supported
+**Note:** Both native and flatpak versions of these apps are supported.
+
+- GNOME Builder
+- VSCode
+  - Official/Proprietary version from Microsoft
+  - VSCodium
+  - Code - OSS
+
+### Request support for your favorite IDE or Code Editor
+You can [create a GitHub issue](https://github.com/realmazharhussain/nautilus-code/issues/new) to request support for your favorite IDE or Code Editor.
