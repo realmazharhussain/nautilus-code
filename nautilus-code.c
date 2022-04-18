@@ -36,11 +36,8 @@ new_menu_item (const char       *short_name,
         command = g_string_append(command, folder_path);
 
         GString *item_name = g_string_new("NautilusCode::");
+        if (selected) item_name = g_string_append (item_name, "Selection::");
         item_name = g_string_append(item_name, short_name);
-        if (selected)
-        {
-            item_name = g_string_append(item_name, "::Selected");
-        }
 
         GString *label = g_string_new("Open in ");
         label = g_string_append(label, short_name);
