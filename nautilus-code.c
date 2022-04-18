@@ -58,28 +58,109 @@ get_background_items (NautilusMenuProvider *provider,
                       NautilusFileInfo *currnet_folder)
 {
     GList *items = NULL;
-    char *command;
 
-    command = NULL;
-    if (g_find_program_in_path("code") != NULL)
-        command = "code";
-    else if (g_find_program_in_path("visual-studio-code") != NULL)
-        command = "visual-studio-code";
+    const char *code_path = g_find_program_in_path("code");
+    const char *codium_path = g_find_program_in_path("codium");
+    const char *vscodium_path = g_find_program_in_path("vscodium");
+    const char *code_oss_path = g_find_program_in_path("code-oss");
 
-    if (command != NULL)
+    const char *vscode_flatpak_path = g_find_program_in_path("com.visualstudio.code");
+    const char *vscodium_flatpak_path = g_find_program_in_path("com.vscodium.codium");
+    const char *code_oss_flatpak_path = g_find_program_in_path("com.visualstudio.code-oss");
+
+    const char *gnome_builder_path = g_find_program_in_path("gnome-builder");
+    const char *gnome_builder_flatpak_path = g_find_program_in_path("org.gnome.Builder");
+
+    if (code_oss_path != NULL)
     {
-        items = g_list_append (items, new_menu_item ("VSCode", "Visual Studio Code", command, currnet_folder) );
+        if (code_oss_flatpak_path != NULL)
+        {
+            items = g_list_append (items, new_menu_item ("Code-OSS (native)", "Code - OSS (native)", "code-oss", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("Code-OSS (flatpak)", "Code - OSS (flatpak)", "com.visualstudio.code-oss", currnet_folder) );
+        }
+        else
+        {
+            items = g_list_append (items, new_menu_item ("Code-OSS", "Code - OSS", "code-oss", currnet_folder) );
+        }
+
+        if (vscode_flatpak_path != NULL)
+        {
+            items = g_list_append (items, new_menu_item ("VSCode", "Visual Studio Code", "com.visualstudio.code", currnet_folder) );
+        }
+    }
+    else if (code_path != NULL)
+    {
+        if (vscode_flatpak_path != NULL)
+        {
+            items = g_list_append (items, new_menu_item ("VSCode (native)", "Visual Studio Code (native)", "code", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("VSCode (flatpak)", "Visual Studio Code (flatpak)", "com.visualstudio.code", currnet_folder) );
+        }
+        else
+        {
+            items = g_list_append (items, new_menu_item ("VSCode", "Visual Studio Code", "code", currnet_folder) );
+        }
+
+        if (code_oss_flatpak_path != NULL)
+        {
+            items = g_list_append (items, new_menu_item ("Code-OSS", "Code - OSS", "com.visualstudio.code-oss", currnet_folder) );
+        }
+    }
+    else
+    {
+        if (vscode_flatpak_path != NULL)
+        {
+            items = g_list_append (items, new_menu_item ("VSCode", "Visual Studio Code", "com.visualstudio.code", currnet_folder) );
+        }
+        if (code_oss_flatpak_path != NULL)
+        {
+            items = g_list_append (items, new_menu_item ("Code-OSS", "Code - OSS", "com.visualstudio.code-oss", currnet_folder) );
+        }
     }
 
-    command = NULL;
-    if (g_find_program_in_path("gnome-builder") != NULL)
-        command = "gnome-builder --project";
-    else if (g_find_program_in_path("org.gnome.Builder") != NULL)
-        command = "org.gnome.Builder --project";
-
-    if (command != NULL)
+    if (vscodium_path != NULL)
     {
-        items = g_list_append (items, new_menu_item ("Builder", "GNOME Builder", command, currnet_folder) );
+        if (vscodium_flatpak_path != NULL)
+        {
+            items = g_list_append (items, new_menu_item ("VSCodium (native)", "Visual Studio Codium (native)", "vscodium", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("VSCodium (flatpak)", "Visual Studio Codium (flatpak)", "com.vscodium.codium", currnet_folder) );
+        }
+        else
+        {
+            items = g_list_append (items, new_menu_item ("VSCodium", "Visual Studio Codium", "vscodium", currnet_folder) );
+        }
+    }
+    else if (codium_path != NULL)
+    {
+        if (vscodium_flatpak_path != NULL)
+        {
+            items = g_list_append (items, new_menu_item ("VSCodium (native)", "Visual Studio Codium (native)", "codium", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("VSCodium (flatpak)", "Visual Studio Codium (flatpak)", "com.vscodium.codium", currnet_folder) );
+        }
+        else
+        {
+            items = g_list_append (items, new_menu_item ("VSCodium", "Visual Studio Codium", "codium", currnet_folder) );
+        }
+    }
+    else if (vscodium_flatpak_path != NULL)
+    {
+        items = g_list_append (items, new_menu_item ("VSCodium", "Visual Studio Codium", "com.vscodium.codium", currnet_folder) );
+    }
+
+    if (gnome_builder_path != NULL)
+    {
+        if (gnome_builder_flatpak_path != NULL)
+        {
+            items = g_list_append (items, new_menu_item ("Builder (native)", "GNOME Builder (native)", "gnome-builder --project", currnet_folder) );
+            items = g_list_append (items, new_menu_item ("Builder (flatpak)", "GNOME Builder (flatpak)", "org.gnome.Builder --project", currnet_folder) );
+        }
+        else
+        {
+            items = g_list_append (items, new_menu_item ("Builder", "GNOME Builder", "gnome-builder --project", currnet_folder) );
+        }
+    }
+    else if (gnome_builder_flatpak_path != NULL)
+    {
+        items = g_list_append (items, new_menu_item ("Builder", "GNOME Builder", "org.gnome.Builder --project", currnet_folder) );
     }
 
     return items;
