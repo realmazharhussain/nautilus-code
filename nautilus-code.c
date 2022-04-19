@@ -169,8 +169,8 @@ get_menu_items (NautilusFileInfo *folder,
     if (sublime_path != NULL)
     {
         if (sublime_flatpak_path) {
-            items = g_list_append (items, new_menu_item ("Sublime Text(native)", "Sublime Text (native)", "subl", folder, selected) );
-            items = g_list_append (items, new_menu_item ("Sublime Text(flatpak)", "Sublime Text (flatpak)", "com.sublimetext.three", folder, selected) );
+            items = g_list_append (items, new_menu_item ("Sublime Text (native)", "Sublime Text (native)", "subl", folder, selected) );
+            items = g_list_append (items, new_menu_item ("Sublime Text (flatpak)", "Sublime Text (flatpak)", "com.sublimetext.three", folder, selected) );
         }
         else {
             items = g_list_append (items, new_menu_item ("Sublime Text", "Sublime Text", "subl", folder, selected) );
