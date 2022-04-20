@@ -64,10 +64,12 @@ get_menu_items (NautilusFileInfo *folder,
     const char *codium_path = g_find_program_in_path("codium");
     const char *vscodium_path = g_find_program_in_path("vscodium");
     const char *code_oss_path = g_find_program_in_path("code-oss");
+    const char *sublime_path = g_find_program_in_path("subl");
 
     const char *vscode_flatpak_path = g_find_program_in_path("com.visualstudio.code");
     const char *vscodium_flatpak_path = g_find_program_in_path("com.vscodium.codium");
     const char *code_oss_flatpak_path = g_find_program_in_path("com.visualstudio.code-oss");
+    const char *sublime_flatpak_path = g_find_program_in_path("com.sublimetext.three");
 
     const char *gnome_builder_path = g_find_program_in_path("gnome-builder");
     const char *gnome_builder_flatpak_path = g_find_program_in_path("org.gnome.Builder");
@@ -162,6 +164,20 @@ get_menu_items (NautilusFileInfo *folder,
     else if (gnome_builder_flatpak_path != NULL)
     {
         items = g_list_append (items, new_menu_item ("Builder", "GNOME Builder", "org.gnome.Builder --project", folder, selected) );
+    }
+
+    if (sublime_path != NULL)
+    {
+        if (sublime_flatpak_path) {
+            items = g_list_append (items, new_menu_item ("Sublime Text (native)", "Sublime Text (native)", "subl", folder, selected) );
+            items = g_list_append (items, new_menu_item ("Sublime Text (flatpak)", "Sublime Text (flatpak)", "com.sublimetext.three", folder, selected) );
+        }
+        else {
+            items = g_list_append (items, new_menu_item ("Sublime Text", "Sublime Text", "subl", folder, selected) );
+        }
+    }
+    else if (sublime_flatpak_path) {
+            items = g_list_append (items, new_menu_item ("Sublime Text", "Sublime Text", "com.sublimetext.three", folder, selected) );        
     }
 
     return items;
