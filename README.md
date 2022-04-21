@@ -29,6 +29,8 @@ This nautilus extension is available in the AUR as [nautilus-code](https://aur.a
   - Official/Proprietary version from Microsoft
   - VSCodium
   - Code - OSS
+- Sublime Text
+- PhpStorm
 
 ### Request support for your favorite IDE or Code Editor
 You can [create a GitHub issue](https://github.com/realmazharhussain/nautilus-code/issues/new) to request support for your favorite IDE or Code Editor.
