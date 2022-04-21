@@ -58,6 +58,7 @@ new_menu_item (char *name,
                                                         NULL
                                                        );
         g_signal_connect (item, "activate", G_CALLBACK(run_command), command);
+
         return item;
 }
 
