@@ -1,6 +1,8 @@
 #include <nautilus-extension.h>
 #include "nautilus-code.h"
 
+#define get_path g_find_program_in_path
+
 struct _NautilusCodeMenuProvider
 {
     GObject parent_instance;
@@ -13,172 +15,136 @@ G_DEFINE_DYNAMIC_TYPE_EXTENDED (NautilusCodeMenuProvider, nautilus_code_menu_pro
                                                                menu_provider_iface_init)
                                )
 
+typedef struct
+{
+    char *pkg_type;
+    char *command;
+} Package;
+
+typedef struct
+{
+    char    *name;
+    char    *flatpak_command;
+    char    *native_command;
+    char    *arguments;
+    char    *additional_command;
+    Package *additional_package;
+} Program;
+
 static void 
 run_command (NautilusMenuItem *item,
-             const char       *command)
+             char             *command)
 {
     
     g_spawn_command_line_async (command, NULL);
 }
 
 static NautilusMenuItem*
-new_menu_item (const char       *short_name,
-               const char       *full_name,
-               const char       *command_start,
-               NautilusFileInfo *folder,
-               const char        selected)
+new_menu_item (char *name,
+               char *command,
+               char  selection_mode)
 {
-        GFile *folder_file = nautilus_file_info_get_location (folder);
-        const char *folder_path = g_file_get_path (folder_file);
+        GString *item_name = g_string_new ("NautilusCode::");
+        if (selection_mode) item_name = g_string_append (item_name, "Selection::");
+        item_name = g_string_append (item_name, name);
 
-        GString *command = g_string_new(command_start);
-        command = g_string_append(command, " ");
-        command = g_string_append(command, folder_path);
-
-        GString *item_name = g_string_new("NautilusCode::");
-        if (selected) item_name = g_string_append (item_name, "Selection::");
-        item_name = g_string_append(item_name, short_name);
-
-        GString *label = g_string_new("Open in ");
-        label = g_string_append(label, short_name);
-
-        GString *tip = g_string_new("Open in ");
-        tip = g_string_append(tip, full_name);
+        GString *label = g_string_new ("Open in ");
+        label = g_string_append (label, name);
+        GString *tip = label;
 
         NautilusMenuItem *item = nautilus_menu_item_new(item_name->str,
                                                         label->str,
                                                         tip->str,
                                                         NULL
                                                        );
-        g_signal_connect (item, "activate", G_CALLBACK(run_command), command->str);
+        g_signal_connect (item, "activate", G_CALLBACK(run_command), command);
         return item;
 }
 
 static GList*
-get_menu_items (NautilusFileInfo *folder,
-                const char        selected)
+add_if_installed(GList            *list,
+                 Program          *prog,
+                 NautilusFileInfo *folder,
+                 char              selection_mode)
 {
+    GFile *folder_file = nautilus_file_info_get_location(folder);
+    char  *folder_path = g_file_get_path(folder_file);
+
+    GString *argument_string = g_string_new (" ");
+    argument_string = g_string_append (argument_string, folder_path);
+    if (prog->arguments) {
+        argument_string = g_string_prepend (argument_string, prog->arguments);
+        argument_string = g_string_prepend (argument_string, " ");
+    }
+
+    char *native_path;
+    if (prog->native_command) {
+        native_path = get_path(prog->native_command);
+        if (!native_path && prog->additional_command)
+            native_path = get_path(prog->additional_command);
+        if (native_path) {
+            GString *command = g_string_new (native_path);
+            command = g_string_append (command, argument_string->str);
+            list = g_list_append(list, new_menu_item(prog->name, command->str, selection_mode));
+        }
+    }
+
+    if (prog->flatpak_command) {
+        char *flatpak_path = get_path (prog->flatpak_command);
+        if (flatpak_path) {
+            GString *name = g_string_new (prog->name);
+            if (native_path) name = g_string_append (name, " (flatpak)");
+            GString *command = g_string_new (flatpak_path);
+            command = g_string_append (command, argument_string->str);
+            list = g_list_append(list, new_menu_item(name->str, command->str, selection_mode));
+        }
+    }
+
+    if (prog->additional_package) {
+        char *pkg_path = get_path(prog->additional_package->command);
+        if (pkg_path) {
+            GString *name = g_string_new (prog->name);
+            name = g_string_append (name, " (");
+            name = g_string_append (name, prog->additional_package->pkg_type);
+            name = g_string_append (name, ")");
+
+            GString *command = g_string_new (pkg_path);
+            command = g_string_append (command, argument_string->str);
+
+            list = g_list_append(list, new_menu_item(name->str, command->str, selection_mode));
+        }
+    }
+
+    return list;
+}
+
+static GList*
+get_menu_items (NautilusFileInfo *folder,
+                char              selection_mode)
+{
+    #define add_program(prog) items = add_if_installed(items, &prog, folder, selection_mode)
+
     GList *items = NULL;
 
-    const char *code_path = g_find_program_in_path("code");
-    const char *codium_path = g_find_program_in_path("codium");
-    const char *vscodium_path = g_find_program_in_path("vscodium");
-    const char *code_oss_path = g_find_program_in_path("code-oss");
-    const char *sublime_path = g_find_program_in_path("subl");
+    // Program:            Name,            Flatpak ID,           Command
+    Program code_oss = {"Code-OSS", "com.visualstudio.code-oss", "code-oss"};
+    add_program(code_oss);
 
-    const char *vscode_flatpak_path = g_find_program_in_path("com.visualstudio.code");
-    const char *vscodium_flatpak_path = g_find_program_in_path("com.vscodium.codium");
-    const char *code_oss_flatpak_path = g_find_program_in_path("com.visualstudio.code-oss");
-    const char *sublime_flatpak_path = g_find_program_in_path("com.sublimetext.three");
+    Program vscode = {"VSCode", "com.visualstudio.code", "code"};
+    if (get_path(code_oss.native_command))
+        vscode.native_command = NULL;
+    add_program(vscode);
 
-    const char *gnome_builder_path = g_find_program_in_path("gnome-builder");
-    const char *gnome_builder_flatpak_path = g_find_program_in_path("org.gnome.Builder");
+    Program vscodium = {"VSCodium", "com.vscodium.codium", "vscodium"};
+    vscodium.additional_command = "codium";
+    add_program(vscodium);
 
-    if (code_oss_path != NULL)
-    {
-        if (code_oss_flatpak_path != NULL)
-        {
-            items = g_list_append (items, new_menu_item ("Code-OSS (native)", "Code - OSS (native)", "code-oss", folder, selected) );
-            items = g_list_append (items, new_menu_item ("Code-OSS (flatpak)", "Code - OSS (flatpak)", "com.visualstudio.code-oss", folder, selected) );
-        }
-        else
-        {
-            items = g_list_append (items, new_menu_item ("Code-OSS", "Code - OSS", "code-oss", folder, selected) );
-        }
+    Program gnome_builder = {"Builder", "org.gnome.Builder", "gnome-builder"};
+    gnome_builder.arguments = "--project";
+    add_program(gnome_builder);
 
-        if (vscode_flatpak_path != NULL)
-        {
-            items = g_list_append (items, new_menu_item ("VSCode", "Visual Studio Code", "com.visualstudio.code", folder, selected) );
-        }
-    }
-    else if (code_path != NULL)
-    {
-        if (vscode_flatpak_path != NULL)
-        {
-            items = g_list_append (items, new_menu_item ("VSCode (native)", "Visual Studio Code (native)", "code", folder, selected) );
-            items = g_list_append (items, new_menu_item ("VSCode (flatpak)", "Visual Studio Code (flatpak)", "com.visualstudio.code", folder, selected) );
-        }
-        else
-        {
-            items = g_list_append (items, new_menu_item ("VSCode", "Visual Studio Code", "code", folder, selected) );
-        }
-
-        if (code_oss_flatpak_path != NULL)
-        {
-            items = g_list_append (items, new_menu_item ("Code-OSS", "Code - OSS", "com.visualstudio.code-oss", folder, selected) );
-        }
-    }
-    else
-    {
-        if (vscode_flatpak_path != NULL)
-        {
-            items = g_list_append (items, new_menu_item ("VSCode", "Visual Studio Code", "com.visualstudio.code", folder, selected) );
-        }
-        if (code_oss_flatpak_path != NULL)
-        {
-            items = g_list_append (items, new_menu_item ("Code-OSS", "Code - OSS", "com.visualstudio.code-oss", folder, selected) );
-        }
-    }
-
-    if (vscodium_path != NULL)
-    {
-        if (vscodium_flatpak_path != NULL)
-        {
-            items = g_list_append (items, new_menu_item ("VSCodium (native)", "Visual Studio Codium (native)", "vscodium", folder, selected) );
-            items = g_list_append (items, new_menu_item ("VSCodium (flatpak)", "Visual Studio Codium (flatpak)", "com.vscodium.codium", folder, selected) );
-        }
-        else
-        {
-            items = g_list_append (items, new_menu_item ("VSCodium", "Visual Studio Codium", "vscodium", folder, selected) );
-        }
-    }
-    else if (codium_path != NULL)
-    {
-        if (vscodium_flatpak_path != NULL)
-        {
-            items = g_list_append (items, new_menu_item ("VSCodium (native)", "Visual Studio Codium (native)", "codium", folder, selected) );
-            items = g_list_append (items, new_menu_item ("VSCodium (flatpak)", "Visual Studio Codium (flatpak)", "com.vscodium.codium", folder, selected) );
-        }
-        else
-        {
-            items = g_list_append (items, new_menu_item ("VSCodium", "Visual Studio Codium", "codium", folder, selected) );
-        }
-    }
-    else if (vscodium_flatpak_path != NULL)
-    {
-        items = g_list_append (items, new_menu_item ("VSCodium", "Visual Studio Codium", "com.vscodium.codium", folder, selected) );
-    }
-
-    if (gnome_builder_path != NULL)
-    {
-        if (gnome_builder_flatpak_path != NULL)
-        {
-            items = g_list_append (items, new_menu_item ("Builder (native)", "GNOME Builder (native)", "gnome-builder --project", folder, selected) );
-            items = g_list_append (items, new_menu_item ("Builder (flatpak)", "GNOME Builder (flatpak)", "org.gnome.Builder --project", folder, selected) );
-        }
-        else
-        {
-            items = g_list_append (items, new_menu_item ("Builder", "GNOME Builder", "gnome-builder --project", folder, selected) );
-        }
-    }
-    else if (gnome_builder_flatpak_path != NULL)
-    {
-        items = g_list_append (items, new_menu_item ("Builder", "GNOME Builder", "org.gnome.Builder --project", folder, selected) );
-    }
-
-    if (sublime_path != NULL)
-    {
-        if (sublime_flatpak_path) {
-            items = g_list_append (items, new_menu_item ("Sublime Text (native)", "Sublime Text (native)", "subl", folder, selected) );
-            items = g_list_append (items, new_menu_item ("Sublime Text (flatpak)", "Sublime Text (flatpak)", "com.sublimetext.three", folder, selected) );
-        }
-        else {
-            items = g_list_append (items, new_menu_item ("Sublime Text", "Sublime Text", "subl", folder, selected) );
-        }
-    }
-    else if (sublime_flatpak_path) {
-            items = g_list_append (items, new_menu_item ("Sublime Text", "Sublime Text", "com.sublimetext.three", folder, selected) );        
-    }
+    Program sublime_text = {"Sublime Text", "com.sublimetext.three", "subl"};
+    add_program(sublime_text);
 
     return items;
 }
@@ -188,8 +154,8 @@ get_background_items (NautilusMenuProvider *provider,
                       GtkWidget            *window,
                       NautilusFileInfo     *current_folder)
 {
-    const char selected = FALSE;
-    return get_menu_items (current_folder, selected);
+    char selection_mode = FALSE;
+    return get_menu_items (current_folder, selection_mode);
 }
 
 GList*
@@ -197,14 +163,14 @@ get_file_items (NautilusMenuProvider *provider,
                 GtkWidget            *window,
                 GList                *files)
 {
-    const char selected = TRUE;
+    char selection_mode = TRUE;
 
     if (g_list_length(files) == 1)
     {
         NautilusFileInfo *selected_file = g_list_first(files)->data; // get first element of the list 'files'
         if (nautilus_file_info_is_directory(selected_file))
         {
-            return get_menu_items (selected_file, selected);
+            return get_menu_items (selected_file, selection_mode);
         }
     }
     return (GList *) NULL;
