@@ -146,6 +146,11 @@ get_menu_items (NautilusFileInfo *folder,
     Program sublime_text = {"Sublime Text", "com.sublimetext.three", "subl"};
     add_program(sublime_text);
 
+    Package phpstorm_eap = {"EAP", "phpstorm-eap"};
+    Program phpstorm = {"PhpStorm", "com.jetbrains.PhpStorm", "phpstorm"};
+    phpstorm.additional_package = &phpstorm_eap;
+    add_program(phpstorm);
+
     return items;
 }
 
