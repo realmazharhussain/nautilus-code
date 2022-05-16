@@ -136,6 +136,9 @@ get_menu_items (NautilusFileInfo *folder,
         vscode.native_command = NULL;
     add_program(vscode);
 
+    Program code_insiders = {"VSCode (Insiders)", NULL, "code-insiders"};
+    add_program(code_insiders);
+
     Program vscodium = {"VSCodium", "com.vscodium.codium", "vscodium"};
     vscodium.additional_command = "codium";
     add_program(vscodium);
