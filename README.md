@@ -27,6 +27,7 @@ This nautilus extension is available in the AUR as [nautilus-code](https://aur.a
 - GNOME Builder
 - VSCode
   - Official/Proprietary version from Microsoft
+  - Insiders
   - VSCodium
   - Code - OSS
 - Sublime Text
