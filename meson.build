@@ -1,5 +1,5 @@
 project('nautilus-code', 'c',
-  version: '0.1',
+  version: '0.5.alpha',
   default_options: [
     'prefix=/usr',
   ]
