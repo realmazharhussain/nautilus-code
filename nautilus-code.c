@@ -72,7 +72,9 @@ add_if_installed(GList            *list,
     char  *folder_path = g_file_get_path(folder_file);
 
     GString *argument_string = g_string_new (" ");
+    argument_string = g_string_append (argument_string, "\"");
     argument_string = g_string_append (argument_string, folder_path);
+    argument_string = g_string_append (argument_string, "\"");
     if (prog->arguments) {
         argument_string = g_string_prepend (argument_string, prog->arguments);
         argument_string = g_string_prepend (argument_string, " ");
