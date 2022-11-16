@@ -7,7 +7,7 @@ project('nautilus-code', 'c',
 
 shared_module(meson.project_name(),
   ['nautilus-code-module.c', 'nautilus-code.c'],
-  dependencies : dependency('libnautilus-extension'),
-  install_dir: get_option('prefix') / get_option('libdir') / 'nautilus/extensions-3.0',
+  dependencies : dependency('libnautilus-extension-4'),
+  install_dir: get_option('prefix') / get_option('libdir') / 'nautilus/extensions-4',
   install: true,
 )

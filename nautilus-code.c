@@ -162,7 +162,6 @@ get_menu_items (NautilusFileInfo *folder,
 
 GList*
 get_background_items (NautilusMenuProvider *provider,
-                      GtkWidget            *window,
                       NautilusFileInfo     *current_folder)
 {
     char selection_mode = FALSE;
@@ -171,7 +170,6 @@ get_background_items (NautilusMenuProvider *provider,
 
 GList*
 get_file_items (NautilusMenuProvider *provider,
-                GtkWidget            *window,
                 GList                *files)
 {
     char selection_mode = TRUE;
