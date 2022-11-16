@@ -1,0 +1,21 @@
+name: Editor/IDE Support Request
+description: Request support for a code editor or an IDE
+title: Add support for <Editor/IDE name here>
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Thanks for taking your time to submit this request!
+  - type: checkboxes
+    attributes:
+      label: Acknowledgements
+      options:
+        - label: I have read the list of [currently supported code editors and IDEs](https://github.com/realmazharhussain/nautilus-code#currently-supported) and I don't see it listed there.
+          required: true
+  - type: textarea
+    attributes:
+      label: Editor/IDE website (Optional)
+      placeholder: https://code.visualstudio.com
+    validations:
+      required: false

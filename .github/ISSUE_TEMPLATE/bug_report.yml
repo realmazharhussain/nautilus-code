@@ -1,0 +1,69 @@
+name: Bug Report
+description: Report a bug
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: what-happend
+    attributes:
+      label: What happened?
+      description: Describe concisely
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: What was supposed to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: how-to-reproduce
+    attributes:
+      label: To Reproduce
+      description: Steps to reproduce the behavior
+    validations:
+      required: true
+  - type: textarea
+    id: explaination
+    attributes:
+      label: Detailed Explaination (Optional)
+      description: Explain the problem in detail
+    validations:
+      required: false
+  - type: input
+    attributes:
+      label: Extension Version
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Source
+      description: |
+        How did you get this software?
+
+        Examples:
+        - Flatpak
+        - AppImage
+        - Snap
+        - AUR
+        - RPM Fusion
+        - Distro's Repositories
+        - Source Code
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Environment
+      description: |
+        examples:
+          - OS: Ubuntu 22.04
+          - DE: GNOME 41.3
+      value: |
+          - OS: 
+          - DE: 
+    validations:
+      required: true
