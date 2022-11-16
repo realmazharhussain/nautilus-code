@@ -3,6 +3,8 @@ An extension for Nautilus (GNOME Files) File Manager which adds right-click menu
 
 ## How to install?
 
+**Note:** This extension only supports Nautilus 43 and above. If you would like to use it with an earlier version of Nautilus, you will need to use [legacy](https://github.com/realmazharhussain/nautilus-code/tree/legacy) branch.
+
 ### On ArchLinux/Manjaro (and other ArchLinux-based distributions)
 This nautilus extension is available in the AUR as [nautilus-code](https://aur.archlinux.org/packages/nautilus-code) and [nautilus-code-git](https://aur.archlinux.org/packages/nautilus-code-git). Use your favorite AUR helper to install it.
 
