@@ -13,8 +13,8 @@ This nautilus extension is available in the AUR as [nautilus-code](https://aur.a
   ```bash
   git clone --depth=1 https://github.com/realmazharhussain/nautilus-code.git
   cd nautilus-code
-  meson build
-  sudo meson install -C build
+  meson setup build
+  meson install -C build
   ```
 
 **Note:** To uninstall (if installed manually) just remove the file `/usr/lib/nautilus/extensions-3.0/libnautilus-code.so`.
