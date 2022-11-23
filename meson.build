@@ -1,13 +1,14 @@
-project('nautilus-code', 'c',
+project('nautilus-code',
   version: '0.6.alpha',
-  default_options: [
-    'prefix=/usr',
-  ]
 )
 
-shared_module(meson.project_name(),
-  ['nautilus-code-module.c', 'nautilus-code.c'],
-  dependencies : dependency('libnautilus-extension-4'),
-  install_dir: get_option('prefix') / get_option('libdir') / 'nautilus/extensions-4',
-  install: true,
+dependency('nautilus-python', required:true)
+
+extensions_dir = get_option('datadir') / 'nautilus-python/extensions'
+
+install_data(
+  files('nautilus-code.py'),
+  install_dir: extensions_dir,
 )
+
+subdir('NautilusCode')
