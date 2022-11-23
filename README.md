@@ -7,7 +7,7 @@ An extension for Nautilus (GNOME Files) File Manager which adds right-click menu
 This nautilus extension is available in the AUR as [nautilus-code](https://aur.archlinux.org/packages/nautilus-code) and [nautilus-code-git](https://aur.archlinux.org/packages/nautilus-code-git). Use your favorite AUR helper to install it.
 
 ### Manual Installation
-- Make sure `git`, `meson` and `libnautilus-extension` are installed on your system
+- Make sure `git`, `meson` and [NautilusPython](https://wiki.gnome.org/Projects/NautilusPython) are installed on your system
 - Run the following commands in terminal
   
   ```bash
