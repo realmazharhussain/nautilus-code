@@ -1,1 +1,1 @@
-from NautilusCode import NautilusCode
+from NautilusCode import Extension

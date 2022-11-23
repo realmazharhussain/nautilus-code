@@ -1,4 +1,7 @@
-install_data(
-  files('__init__.py'),
+install_data([
+    '__init__.py',
+    'types.py',
+    'program_list.py',
+  ],
   install_dir: extensions_dir / 'NautilusCode',
 )
