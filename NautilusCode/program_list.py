@@ -1,18 +1,20 @@
-from .types import ProgramList, Program, Native, Flatpak, Edition
+from .types import ProgramList, Program, Native, Flatpak
 
 progs = ProgramList()
 
 progs += Program('Code-OSS',
-                   Native('code-oss'),
-                   Flatpak('com.visualstudio.code-os'))
+                 Native('code-oss'),
+                 Flatpak('com.visualstudio.code-os'))
 
-progs += Program('VSCode',
-                 Flatpak('com.visualstudio.code'),
-                 Edition('Insiders',
-                         Native('code-insiders')))
+progs += Program('VSCode', Flatpak('com.visualstudio.code'))
 
+# Code-OSS also has a binary named 'code'. If Code-OSS is installed, the
+# command 'code' refers to Code-OSS instead of Microsoft VSCode. So, in
+# that case, we shouldn't show a menu entry for Microsft 'VSCode'.
 if not progs['Code-OSS']['Native'].is_installed:
-    progs['VSCode'].add_package(Native('code'))
+    progs['VSCode'] += Native('code')
+
+progs += Program('VSCode (Insiders)', Native('code-insiders'))
 
 progs += Program('VSCodium',
                  Native('vscodium', 'codium'),
@@ -23,12 +25,12 @@ progs += Program('Builder',
                  Native('gnome-builder'),
                  arguments=['--project'])
 
-progs += Program("Sublime Text",
+progs += Program("Sublime",
                  Flatpak("com.sublimetext.three"),
                  Native("subl"))
 
 progs += Program("PhpStorm",
                  Flatpak("com.jetbrains.PhpStorm"),
-                 Native("phpstorm"),
-                 Edition("EAP",
-                         Native("phpstorm-eap")))
+                 Native("phpstorm"))
+
+progs += Program("PhpStorm (EAP)", Native("phpstorm-eap"))
