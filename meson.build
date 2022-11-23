@@ -1,5 +1,8 @@
 project('nautilus-code',
   version: '0.6.alpha',
+  default_options: [
+    'prefix=~/.local',
+  ]
 )
 
 dependency('nautilus-python', required:true)
