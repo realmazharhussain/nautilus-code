@@ -17,7 +17,11 @@ This nautilus extension is available in the AUR as [nautilus-code](https://aur.a
   meson install -C build
   ```
 
-**Note:** To uninstall (if installed manually) just remove the file `/usr/lib/nautilus/extensions-4/libnautilus-code.so`.
+**Note:** To uninstall (if installed manually), run the following command in the same directory where you ran the `meson install` command
+
+```bash
+ninja uninstall -C build
+```
 
 ## Supported Code Editors and IDEs
 
