@@ -14,7 +14,9 @@ progs += Program('VSCode', Flatpak('com.visualstudio.code'))
 if not progs['Code-OSS']['Native'].is_installed:
     progs['VSCode'] += Native('code')
 
-progs += Program('VSCode (Insiders)', Native('code-insiders'))
+progs += Program('VSCode (Insiders)',
+                 Native('code-insiders'),
+                 Flatpak('com.visualstudio.code.insiders'))
 
 progs += Program('VSCodium',
                  Native('vscodium', 'codium'),
