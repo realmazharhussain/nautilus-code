@@ -1,0 +1,27 @@
+import gettext
+
+def _setup_gettext():
+    gettext.bindtextdomain('nautilus-code', '@localedir@')
+    gettext.textdomain('nautilus-code')
+
+_setup_gettext()
+
+from gi.repository import Nautilus, GObject
+from NautilusCode.program_list import progs
+
+
+class Extension (GObject.Object, Nautilus.MenuProvider):
+
+    def get_background_items (self, *args):
+        _setup_gettext()
+        current_folder = args[-1]
+        folder_path = current_folder.get_location().get_path()
+        return  progs.get_menu_items(folder_path)
+
+    def get_file_items (self, *args):
+        selected_files = args[-1]
+        
+        if len(selected_files) != 1 or not selected_files[0].is_directory():
+            return
+        
+        return self.get_background_items(selected_files[0])

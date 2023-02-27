@@ -1,5 +1,4 @@
 install_data([
-    '__init__.py',
     'types.py',
     'program_list.py',
   ],

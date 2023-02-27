@@ -1,0 +1,71 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the nautilus-code package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: nautilus-code 3.alpha\n"
+"Report-Msgid-Bugs-To: realmazharhussain@gmail.com\n"
+"POT-Creation-Date: 2023-02-27 17:58+0500\n"
+"PO-Revision-Date: 2023-02-27 17:59+0500\n"
+"Last-Translator: Mazhar Hussain <realmazharhussain@gmail.com>\n"
+"Language-Team: \n"
+"Language: ur\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: NautilusCode/types.py:23
+msgid "Unknown"
+msgstr "نا معلوم"
+
+#: NautilusCode/types.py:34
+msgid "Native"
+msgstr "مقامی"
+
+#: NautilusCode/types.py:64
+msgid "Flatpak"
+msgstr "فلیٹ پیک"
+
+#: NautilusCode/types.py:171
+#, python-format
+msgid "Open in %s"
+msgstr "%s میں کھولیں"
+
+#: NautilusCode/program_list.py:7
+msgid "Code-OSS"
+msgstr ""
+
+#: NautilusCode/program_list.py:11
+msgid "VSCode"
+msgstr ""
+
+#: NautilusCode/program_list.py:21
+msgid "VSCode (Insiders)"
+msgstr ""
+
+#: NautilusCode/program_list.py:25
+msgid "VSCodium"
+msgstr ""
+
+#: NautilusCode/program_list.py:29
+msgid "Builder"
+msgstr ""
+
+#: NautilusCode/program_list.py:34
+msgid "Sublime"
+msgstr ""
+
+#: NautilusCode/program_list.py:38
+msgid "PhpStorm"
+msgstr ""
+
+#: NautilusCode/program_list.py:42
+msgid "PhpStorm (EAP)"
+msgstr ""
+
+#~ msgid "Hello, from NautilusCode"
+#~ msgstr "Nautilus Code میں خوش آمدید"

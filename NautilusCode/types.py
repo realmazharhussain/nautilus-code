@@ -1,5 +1,9 @@
 import os
-from gi.repository import Nautilus ,GLib
+from gettext import gettext as _
+
+from gi.repository import Nautilus
+from gi.repository import GLib
+
 
 user_data_dir = GLib.get_user_data_dir()
 
@@ -16,16 +20,18 @@ class NamedList (dict):
 class Package:
     run_command: tuple[str]
     is_installed: bool
+    type_name = _('Unknown')
 
     @property
-    def type_string (self):
+    def type_name_raw (self):
         return self.__class__.__name__
 
     def __str__ (self):
-        return f"{self.type_string}:\n  installed = {self.is_installed}"
+        return f"{self.type_name}:\n  installed = {self.is_installed}"
 
 
 class Native (Package):
+    type_name = _('Native')
     cmd_path = ''
 
     def __init__ (self, *commands):
@@ -55,6 +61,7 @@ class Native (Package):
 
 
 class Flatpak (Package):
+    type_name = _('Flatpak')
     flatpak_path = GLib.find_program_in_path('flatpak') or ''
     flatpak_bin_dirs = None
 
@@ -106,7 +113,8 @@ class Flatpak (Package):
 
 
 class Program:
-    def __init__ (self, name:str, *packages, arguments:list[str]=None):
+    def __init__ (self, id:str, name:str, *packages, arguments:list[str]=None):
+        self.id = id
         self.name = name
         self.arguments = arguments or []
         self.packages = NamedList()
@@ -122,17 +130,18 @@ class Program:
         return pkgs
 
     def add (self, pkg):
-        self.packages[pkg.type_string] = pkg
+        self.packages[pkg.type_name_raw] = pkg
         return self
 
     def __iadd__ (self, pkg):
         return self.add(pkg)
 
-    def __getitem__ (self, type_string):
-        return self.packages[type_string]
+    def __getitem__ (self, type_name_raw):
+        return self.packages[type_name_raw]
 
     def __str__ (self):
         _str  =  'Program:'
+        _str += f'\n  Id: {self.id}'
         _str += f'\n  Name: {self.name}'
         if self.arguments:
           _str += f'\n  Arguments: ' + ' '.join(repr(x) for x in self.arguments)
@@ -145,7 +154,7 @@ class Program:
 class ProgramList (NamedList):
 
     @staticmethod
-    def _activate_item (item, command):
+    def _activate_item (item, command: list[str]):
         pid, *io = GLib.spawn_async(command)
         GLib.spawn_close_pid(pid)
 
@@ -154,20 +163,20 @@ class ProgramList (NamedList):
 
         for program in self:
             installed_pkgs = program.installed_packages
-            include_type_string = True if len(installed_pkgs) > 1 else False
+            include_type_name = True if len(installed_pkgs) > 1 else False
 
             for pkg in installed_pkgs:
                 command = [*pkg.run_command, *program.arguments, folder_path]
-                label = 'Open in ' + program.name
-                if include_type_string:
-                    label += f' ({pkg.type_string})'
+                label = _('Open in %s') % program.name
+                if include_type_name:
+                    label += f' ({pkg.type_name})'
 
-                item = Nautilus.MenuItem.new(program.name, label, label)
+                item = Nautilus.MenuItem.new(program.id, label)
                 item.connect('activate', self._activate_item, command)
                 items.append(item)
 
         return items
 
     def __iadd__ (self, value, /):
-        self[value.name] = value
+        self[value.id] = value
         return self

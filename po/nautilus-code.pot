@@ -1,0 +1,67 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the nautilus-code package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nautilus-code 3.alpha\n"
+"Report-Msgid-Bugs-To: realmazharhussain@gmail.com\n"
+"POT-Creation-Date: 2023-02-27 17:58+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: NautilusCode/types.py:23
+msgid "Unknown"
+msgstr ""
+
+#: NautilusCode/types.py:34
+msgid "Native"
+msgstr ""
+
+#: NautilusCode/types.py:64
+msgid "Flatpak"
+msgstr ""
+
+#: NautilusCode/types.py:171
+#, python-format
+msgid "Open in %s"
+msgstr ""
+
+#: NautilusCode/program_list.py:7
+msgid "Code-OSS"
+msgstr ""
+
+#: NautilusCode/program_list.py:11
+msgid "VSCode"
+msgstr ""
+
+#: NautilusCode/program_list.py:21
+msgid "VSCode (Insiders)"
+msgstr ""
+
+#: NautilusCode/program_list.py:25
+msgid "VSCodium"
+msgstr ""
+
+#: NautilusCode/program_list.py:29
+msgid "Builder"
+msgstr ""
+
+#: NautilusCode/program_list.py:34
+msgid "Sublime"
+msgstr ""
+
+#: NautilusCode/program_list.py:38
+msgid "PhpStorm"
+msgstr ""
+
+#: NautilusCode/program_list.py:42
+msgid "PhpStorm (EAP)"
+msgstr ""

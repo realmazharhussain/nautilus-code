@@ -5,13 +5,19 @@ project('nautilus-code',
   ]
 )
 
-dependency('nautilus-python', required:true)
+dependency('nautilus-python', required: true)
 
 extensions_dir = get_option('datadir') / 'nautilus-python/extensions'
 
-install_data(
-  files('nautilus-code.py'),
+configure_file(
+  input: 'nautilus-code.py.in',
+  output: 'nautilus-code.py',
+  install: true,
   install_dir: extensions_dir,
+  configuration: configuration_data({
+    'localedir': get_option('prefix') / get_option('localedir'),
+  })
 )
 
 subdir('NautilusCode')
+subdir('po')
