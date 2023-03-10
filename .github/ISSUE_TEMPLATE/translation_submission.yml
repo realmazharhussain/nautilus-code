@@ -43,7 +43,7 @@ body:
       description: Link-to/contents-of your translation (.po) file
     validations:
       required: true
-  - type: textarea
+  - type: input
     attributes:
       label: Author Name
       description: |
@@ -52,7 +52,7 @@ body:
         It will be used to identify you as the author of this change.
     validations:
       required: true
-  - type: textarea
+  - type: input
     attributes:
       label: Author Email
       description: |
