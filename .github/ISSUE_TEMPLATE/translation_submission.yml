@@ -43,3 +43,21 @@ body:
       description: Link-to/contents-of your translation (.po) file
     validations:
       required: true
+  - type: textarea
+    attributes:
+      label: Author Name
+      description: |
+        Your full name
+
+        It will be used to identify you as the author of this change.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Author Email
+      description: |
+        It will be used to identify you as the author of this change.
+
+        Note: If you want to keep your real email private, you can put your GitHub noreply email here.
+    validations:
+      required: true
