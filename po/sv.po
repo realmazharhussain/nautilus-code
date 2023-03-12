@@ -1,0 +1,67 @@
+# nautilus-code .
+# Copyright (C) 2023
+# This file is distributed under the same license as the nautilus-code package.
+# Luna Jernberg <lunajernberg@gnome.org>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: nautilus-code 3.alpha\n"
+"Report-Msgid-Bugs-To: realmazharhussain@gmail.com\n"
+"POT-Creation-Date: 2023-02-27 17:58+0500\n"
+"PO-Revision-Date: 2023-03-12 08:26+0100\n"
+"Last-Translator: Luna Jernberg <lunajernberg@gnome.org>\n"
+"Language-Team: sv-se\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: NautilusCode/types.py:23
+msgid "Unknown"
+msgstr "Okänd"
+
+#: NautilusCode/types.py:34
+msgid "Native"
+msgstr "Ursprunglig"
+
+#: NautilusCode/types.py:64
+msgid "Flatpak"
+msgstr "Flatpak"
+
+#: NautilusCode/types.py:171
+#, python-format
+msgid "Open in %s"
+msgstr "Öppna i %s"
+
+#: NautilusCode/program_list.py:7
+msgid "Code-OSS"
+msgstr "Code-OSS"
+
+#: NautilusCode/program_list.py:11
+msgid "VSCode"
+msgstr "VSCode"
+
+#: NautilusCode/program_list.py:21
+msgid "VSCode (Insiders)"
+msgstr "VSCode (Insiders)"
+
+#: NautilusCode/program_list.py:25
+msgid "VSCodium"
+msgstr "VSCodium"
+
+#: NautilusCode/program_list.py:29
+msgid "Builder"
+msgstr "Builder"
+
+#: NautilusCode/program_list.py:34
+msgid "Sublime"
+msgstr "Sublime"
+
+#: NautilusCode/program_list.py:38
+msgid "PhpStorm"
+msgstr "PhpStorm"
+
+#: NautilusCode/program_list.py:42
+msgid "PhpStorm (EAP)"
+msgstr "PhpStorm (EAP)"
