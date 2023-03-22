@@ -34,9 +34,97 @@ progs += Program('sublime', _("Sublime"),
                  Flatpak("com.sublimetext.three"),
                  Native("subl"))
 
+progs += Program('android-studio', _('Android Studio'),
+                 Native('studio'),
+                 Flatpak('com.google.AndroidStudio'))
+
+progs += Program('aqua', _('Aqua'),
+                 Native('aqua'))
+
+progs += Program('clion', _('CLion'),
+                 Native('clion'),
+                 Flatpak('com.jetbrains.CLion'),)
+
+progs += Program('clion-eap', _('CLion (EAP)'),
+                 Native('clion-eap'))
+
+progs += Program('datagrip', _('DataGrip'),
+                 Native('datagrip'),
+                 Flatpak('com.jetbrains.DataGrip'))
+
+progs += Program('datagrip-eap', _('DataGrip (EAP)'),
+                 Native('datagrip-eap'))
+
+progs += Program('dataspell', _('DataSpell'),
+                 Native('dataspell'))
+
+progs += Program('dataspell-eap', _('DataSpell (EAP)'),
+                 Native('dataspell-eap'))
+
+progs += Program('fleet', _('Fleet'),
+                 Native('fleet'))
+
+progs += Program('goland', _('GoLand'),
+                 Native('goland'),
+                 Flatpak('com.jetbrains.GoLand'))
+
+progs += Program('goland-eap', _('GoLand (EAP)'),
+                 Native('goland-eap'))
+
+# IntelliJ IDEA has multiple editions that default to the same command but
+# prioritise the highest-paying edition. Therefore the native version has been
+# treated as a separate program due to the uncertainty around edition.
+progs += Program('idea', _('IntelliJ IDEA'),
+                 Native('idea'))
+
+progs += Program('idea-eap', _('IntelliJ IDEA (EAP)'),
+                 Native('idea-eap'))
+
+progs += Program('idea-community', _('IntelliJ IDEA Community'),
+                 Flatpak('com.jetbrains.IntelliJ-IDEA-Community'))
+
+progs += Program('idea-professional', _('IntelliJ IDEA Ultimate'),
+                 Flatpak('com.jetbrains.IntelliJ-IDEA-Ultimate'))
+
+progs += Program('mps', _('MPS'),
+                 Native('mps'))
+
 progs += Program('phpstorm', _("PhpStorm"),
                  Flatpak("com.jetbrains.PhpStorm"),
                  Native("phpstorm"))
 
 progs += Program('phpstorm-eap', _("PhpStorm (EAP)"),
                  Native("phpstorm-eap"))
+
+# PyCharm has multiple editions that default to the same command but
+# prioritise the highest-paying edition. Therefore the native version has been
+# treated as a separate program due to the uncertainty around edition.
+progs += Program('pycharm', _('PyCharm'),
+		 Native('pycharm'))
+
+progs += Program('pycharm-eap', _('PyCharm (EAP)'),
+		 Native('pycharm-eap'))
+
+progs += Program('pycharm-professional', _('PyCharm Professional'),
+		 Flatpak('com.jetbrains.PyCharm-Professional'))
+
+progs += Program('pycharm-community', _('PyCharm Community'),
+		 Flatpak('com.jetbrains.PyCharm-Community'))
+
+progs += Program('rider', _('Rider'),
+                 Native('rider'),
+                 Flatpak('com.jetbrains.Rider'))
+
+progs += Program('rubymine', _('RubyMine'),
+                 Native('rubymine'),
+                 Flatpak('com.jetbrains.RubyMine'))
+
+progs += Program('rubymine-eap', _('RubyMine (EAP)'),
+                 Native('rubymine-eap'))
+
+progs += Program('webstorm', _('WebStorm'),
+                 Native('webstorm'),
+                 Flatpak('com.jetbrains.WebStorm'))
+
+progs += Program('webstorm-eap', _('WebStorm (EAP)'),
+                 Native('webstorm-eap'))
