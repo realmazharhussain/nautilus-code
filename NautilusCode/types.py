@@ -158,7 +158,7 @@ class ProgramList (NamedList):
         pid, *io = GLib.spawn_async(command)
         GLib.spawn_close_pid(pid)
 
-    def get_menu_items (self, folder_path):
+    def get_menu_items (self, folder_path, *, id_prefix=''):
         items = []
 
         for program in self:
@@ -166,12 +166,13 @@ class ProgramList (NamedList):
             include_type_name = True if len(installed_pkgs) > 1 else False
 
             for pkg in installed_pkgs:
+                name = id_prefix + program.id
                 command = [*pkg.run_command, *program.arguments, folder_path]
                 label = _('Open in %s') % program.name
                 if include_type_name:
                     label += f' ({pkg.type_name})'
 
-                item = Nautilus.MenuItem.new(program.id, label)
+                item = Nautilus.MenuItem.new(name, label)
                 item.connect('activate', self._activate_item, command)
                 items.append(item)
 
