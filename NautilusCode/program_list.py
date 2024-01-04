@@ -6,10 +6,12 @@ progs = ProgramList()
 
 progs += Program('code-oss', _('Code-OSS'),
                  Native('code-oss'),
-                 Flatpak('com.visualstudio.code-os'))
+                 Flatpak('com.visualstudio.code-os'),
+                 supports_files=True)
 
 progs += Program('vscode', _('VSCode'),
-                 Flatpak('com.visualstudio.code'))
+                 Flatpak('com.visualstudio.code'),
+                 supports_files=True)
 
 # Code-OSS also has a binary named 'code'. If Code-OSS is installed, the
 # command 'code' refers to Code-OSS instead of Microsoft VSCode. So, in
@@ -19,11 +21,13 @@ if not progs['code-oss']['Native'].is_installed:
 
 progs += Program('code_insiders', _('VSCode (Insiders)'),
                  Native('code-insiders'),
-                 Flatpak('com.visualstudio.code.insiders'))
+                 Flatpak('com.visualstudio.code.insiders'),
+                 supports_files=True)
 
 progs += Program('vscodium', _('VSCodium'),
                  Native('vscodium', 'codium'),
-                 Flatpak('com.vscodium.codium'))
+                 Flatpak('com.vscodium.codium'),
+                 supports_files=True)
 
 progs += Program('gnome-builder', _('Builder'),
                  Flatpak('org.gnome.Builder'),
