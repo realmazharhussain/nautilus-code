@@ -12,10 +12,10 @@ from NautilusCode.program_list import progs
 
 class Extension (GObject.Object, Nautilus.MenuProvider):
 
-    def _get_items (self, folder, *, id_prefix=''):
+    def _get_items (self, folder, *, id_prefix='', is_file=False):
         _setup_gettext()
         folder_path = folder.get_location().get_path()
-        return  progs.get_menu_items(folder_path, id_prefix=id_prefix)
+        return  progs.get_menu_items(folder_path, id_prefix=id_prefix, is_file=is_file)
 
     def get_background_items (self, *args):
         current_folder = args[-1]
@@ -23,8 +23,11 @@ class Extension (GObject.Object, Nautilus.MenuProvider):
 
     def get_file_items (self, *args):
         selected_files = args[-1]
-        
-        if len(selected_files) != 1 or not selected_files[0].is_directory():
+
+        if len(selected_files) != 1:
             return
         
-        return self._get_items(selected_files[0], id_prefix='selected.')
+        if selected_files[0].is_directory():
+            return self._get_items(selected_files[0], id_prefix='selected.')
+        else:
+            return self._get_items(selected_files[0], id_prefix='selected.', is_file=True)

@@ -113,10 +113,11 @@ class Flatpak (Package):
 
 
 class Program:
-    def __init__ (self, id:str, name:str, *packages, arguments:list[str]=None):
+    def __init__ (self, id:str, name:str, *packages, arguments:list[str]=None, supports_files=False):
         self.id = id
         self.name = name
         self.arguments = arguments or []
+        self.supports_files = supports_files
         self.packages = NamedList()
         for pkg in packages:
             self.add(pkg)
@@ -158,16 +159,19 @@ class ProgramList (NamedList):
         pid, *io = GLib.spawn_async(command)
         GLib.spawn_close_pid(pid)
 
-    def get_menu_items (self, folder_path, *, id_prefix=''):
+    def get_menu_items (self, path, *, id_prefix='', is_file=False):
         items = []
 
         for program in self:
+            if is_file and not program.supports_files:
+                continue
+
             installed_pkgs = program.installed_packages
             include_type_name = True if len(installed_pkgs) > 1 else False
-
             for pkg in installed_pkgs:
+
                 name = id_prefix + program.id
-                command = [*pkg.run_command, *program.arguments, folder_path]
+                command = [*pkg.run_command, *program.arguments, path]
                 label = _('Open in %s') % program.name
                 if include_type_name:
                     label += f' ({pkg.type_name})'
