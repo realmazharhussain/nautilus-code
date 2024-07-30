@@ -9,7 +9,7 @@ This nautilus extension is available in the AUR as [nautilus-code](https://aur.a
 ### Manual Installation
 - Make sure `git`, `meson` and [NautilusPython](https://wiki.gnome.org/Projects/NautilusPython) are installed on your system
 - Run the following commands in terminal
-  
+
   ```bash
   git clone --depth=1 https://github.com/realmazharhussain/nautilus-code.git
   cd nautilus-code
@@ -49,6 +49,7 @@ ninja uninstall -C build
 - Rider
 - RubyMine
 - WebStorm
+- Zed
 
 ### Request support for your favorite IDE or Code Editor
 You can [open a GitHub issue](https://github.com/realmazharhussain/nautilus-code/issues/new) to request support for your favorite IDE or Code Editor.
