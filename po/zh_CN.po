@@ -1,0 +1,65 @@
+# Simplified Chinese translation file.
+# Copyright (C) 2024 THE nautilus-code's COPYRIGHT HOLDER
+# This file is distributed under the same license as the nautilus-code package.
+# SummonHIM <summonhim@qq.com>, 2024.
+msgid ""
+msgstr ""
+"Project-Id-Version: nautilus-code 3.alpha\n"
+"Report-Msgid-Bugs-To: realmazharhussain@gmail.com\n"
+"POT-Creation-Date: 2023-02-27 17:58+0500\n"
+"PO-Revision-Date: 2024-08-08 14:23+0800\n"
+"Last-Translator: SummonHIM <summonhim@qq.com>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#: NautilusCode/types.py:23
+msgid "Unknown"
+msgstr "未知"
+
+#: NautilusCode/types.py:34
+msgid "Native"
+msgstr "原生"
+
+#: NautilusCode/types.py:64
+msgid "Flatpak"
+msgstr "Flatpak"
+
+#: NautilusCode/types.py:171
+#, python-format
+msgid "Open in %s"
+msgstr "通过 %s 打开"
+
+#: NautilusCode/program_list.py:7
+msgid "Code-OSS"
+msgstr "Code-OSS"
+
+#: NautilusCode/program_list.py:11
+msgid "VSCode"
+msgstr "VSCode"
+
+#: NautilusCode/program_list.py:21
+msgid "VSCode (Insiders)"
+msgstr "VSCode (Insiders)"
+
+#: NautilusCode/program_list.py:25
+msgid "VSCodium"
+msgstr "VSCodium"
+
+#: NautilusCode/program_list.py:29
+msgid "Builder"
+msgstr "Builder"
+
+#: NautilusCode/program_list.py:34
+msgid "Sublime"
+msgstr "Sublime"
+
+#: NautilusCode/program_list.py:38
+msgid "PhpStorm"
+msgstr "PhpStorm"
+
+#: NautilusCode/program_list.py:42
+msgid "PhpStorm (EAP)"
+msgstr "PhpStorm (EAP)"
