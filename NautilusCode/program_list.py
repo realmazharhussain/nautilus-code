@@ -29,6 +29,11 @@ progs += Program('vscodium', _('VSCodium'),
                  Flatpak('com.vscodium.codium'),
                  supports_files=True)
 
+progs += Program('codium_insiders', _('VSCodium (Insiders)'),
+                 Native('vscodium-insiders', 'codium-insiders'),
+                 Flatpak('com.vscodium.codium-insiders'),
+                 supports_files=True)
+
 progs += Program('gnome-builder', _('Builder'),
                  Flatpak('org.gnome.Builder'),
                  Native('gnome-builder'),

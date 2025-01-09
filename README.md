@@ -32,7 +32,7 @@ ninja uninstall -C build
 - VSCode
   - Official/Proprietary version from Microsoft
   - Insiders
-  - VSCodium
+  - VSCodium (Standard & Insiders)
   - Code - OSS
 - Sublime Text
 - Android Studio
