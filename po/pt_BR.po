@@ -1,0 +1,67 @@
+# Tradução para português brasileiro do nautilus-code.
+# Copyright (C) 2025 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the nautilus-code package.
+# Marisa Sales <marisa.sales.dev@gmail.com>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: nautilus-code 3.alpha\n"
+"Report-Msgid-Bugs-To: realmazharhussain@gmail.com\n"
+"POT-Creation-Date: 2025-07-12 12:00+0000\n"
+"PO-Revision-Date: 2025-07-12 13:32+0000\n"
+"Last-Translator: Marisa Sales <marisa.sales.dev@gmail.com>\n"
+"Language-Team: Portuguese (Brazil)\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: NautilusCode/types.py:23
+msgid "Unknown"
+msgstr "Desconhecido"
+
+#: NautilusCode/types.py:34
+msgid "Native"
+msgstr "Nativo"
+
+#: NautilusCode/types.py:64
+msgid "Flatpak"
+msgstr "Flatpak"
+
+#: NautilusCode/types.py:171
+#, python-format
+msgid "Open in %s"
+msgstr "Abrir no %s"
+
+#: NautilusCode/program_list.py:7
+msgid "Code-OSS"
+msgstr "Code-OSS"
+
+#: NautilusCode/program_list.py:11
+msgid "VSCode"
+msgstr "VSCode"
+
+#: NautilusCode/program_list.py:21
+msgid "VSCode (Insiders)"
+msgstr "VSCode (Insiders)"
+
+#: NautilusCode/program_list.py:25
+msgid "VSCodium"
+msgstr "VSCodium"
+
+#: NautilusCode/program_list.py:29
+msgid "Builder"
+msgstr "Builder"
+
+#: NautilusCode/program_list.py:34
+msgid "Sublime"
+msgstr "Sublime"
+
+#: NautilusCode/program_list.py:38
+msgid "PhpStorm"
+msgstr "PhpStorm"
+
+#: NautilusCode/program_list.py:42
+msgid "PhpStorm (EAP)"
+msgstr "PhpStorm (EAP)"
