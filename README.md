@@ -36,6 +36,7 @@ ninja uninstall -C build
   - Code - OSS
 - Sublime Text
 - Android Studio
+- Air
 - Aqua
 - CLion
 - Cursor

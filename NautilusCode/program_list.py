@@ -1,6 +1,6 @@
 from gettext import gettext as _
 
-from .types import ProgramList, Program, Native, Flatpak
+from .types import ProgramList, Program, Native, Flatpak, Toolbox
 
 progs = ProgramList()
 
@@ -47,12 +47,18 @@ progs += Program('android-studio', _('Android Studio'),
                  Native('studio'),
                  Flatpak('com.google.AndroidStudio'))
 
+progs += Program('air', _('Air'),
+                 Native('air'),
+                 Toolbox('Air'))
+
 progs += Program('aqua', _('Aqua'),
-                 Native('aqua'))
+                 Native('aqua'),
+                 Toolbox('Aqua'))
 
 progs += Program('clion', _('CLion'),
                  Native('clion'),
-                 Flatpak('com.jetbrains.CLion'),)
+                 Flatpak('com.jetbrains.CLion'),
+                 Toolbox('CLion'))
 
 progs += Program('clion-eap', _('CLion (EAP)'),
                  Native('clion-eap'))
@@ -62,23 +68,27 @@ progs += Program('cursor', _('Cursor'),
 
 progs += Program('datagrip', _('DataGrip'),
                  Native('datagrip'),
-                 Flatpak('com.jetbrains.DataGrip'))
+                 Flatpak('com.jetbrains.DataGrip'),
+                 Toolbox('DataGrip'))
 
 progs += Program('datagrip-eap', _('DataGrip (EAP)'),
                  Native('datagrip-eap'))
 
 progs += Program('dataspell', _('DataSpell'),
-                 Native('dataspell'))
+                 Native('dataspell'),
+                 Toolbox('DataSpell'))
 
 progs += Program('dataspell-eap', _('DataSpell (EAP)'),
                  Native('dataspell-eap'))
 
 progs += Program('fleet', _('Fleet'),
-                 Native('fleet'))
+                 Native('fleet'),
+                 Toolbox('Fleet'))
 
 progs += Program('goland', _('GoLand'),
                  Native('goland'),
-                 Flatpak('com.jetbrains.GoLand'))
+                 Flatpak('com.jetbrains.GoLand'),
+                 Toolbox('GoLand'))
 
 progs += Program('goland-eap', _('GoLand (EAP)'),
                  Native('goland-eap'))
@@ -86,8 +96,11 @@ progs += Program('goland-eap', _('GoLand (EAP)'),
 # IntelliJ IDEA has multiple editions that default to the same command but
 # prioritise the highest-paying edition. Therefore the native version has been
 # treated as a separate program due to the uncertainty around edition.
+# Toolbox uses one toolId per product and cannot cleanly separate EAP from
+# stable, so only the stable entry carries the Toolbox toolId.
 progs += Program('idea', _('IntelliJ IDEA'),
-                 Native('idea'))
+                 Native('idea'),
+                 Toolbox('IntelliJ-IDEA', 'IntelliJIdea', 'IDEA', 'IDEA-U', 'IDEA-C'))
 
 progs += Program('idea-eap', _('IntelliJ IDEA (EAP)'),
                  Native('idea-eap'))
@@ -99,11 +112,13 @@ progs += Program('idea-professional', _('IntelliJ IDEA Ultimate'),
                  Flatpak('com.jetbrains.IntelliJ-IDEA-Ultimate'))
 
 progs += Program('mps', _('MPS'),
-                 Native('mps'))
+                 Native('mps'),
+                 Toolbox('MPS'))
 
 progs += Program('phpstorm', _("PhpStorm"),
                  Flatpak("com.jetbrains.PhpStorm"),
-                 Native("phpstorm"))
+                 Native("phpstorm"),
+                 Toolbox('PhpStorm'))
 
 progs += Program('phpstorm-eap', _("PhpStorm (EAP)"),
                  Native("phpstorm-eap"))
@@ -112,31 +127,43 @@ progs += Program('phpstorm-eap', _("PhpStorm (EAP)"),
 # prioritise the highest-paying edition. Therefore the native version has been
 # treated as a separate program due to the uncertainty around edition.
 progs += Program('pycharm', _('PyCharm'),
-		 Native('pycharm'))
+                 Native('pycharm'),
+                 Toolbox('PyCharm', 'PyCharm-P', 'PyCharm-C'))
 
 progs += Program('pycharm-eap', _('PyCharm (EAP)'),
-		 Native('pycharm-eap'))
+                 Native('pycharm-eap'))
 
 progs += Program('pycharm-professional', _('PyCharm Professional'),
-		 Flatpak('com.jetbrains.PyCharm-Professional'))
+                 Flatpak('com.jetbrains.PyCharm-Professional'))
 
 progs += Program('pycharm-community', _('PyCharm Community'),
-		 Flatpak('com.jetbrains.PyCharm-Community'))
+                 Flatpak('com.jetbrains.PyCharm-Community'))
 
 progs += Program('rider', _('Rider'),
                  Native('rider'),
-                 Flatpak('com.jetbrains.Rider'))
+                 Flatpak('com.jetbrains.Rider'),
+                 Toolbox('Rider'))
 
 progs += Program('rubymine', _('RubyMine'),
                  Native('rubymine'),
-                 Flatpak('com.jetbrains.RubyMine'))
+                 Flatpak('com.jetbrains.RubyMine'),
+                 Toolbox('RubyMine'))
 
 progs += Program('rubymine-eap', _('RubyMine (EAP)'),
                  Native('rubymine-eap'))
 
+progs += Program('rustrover', _('RustRover'),
+                 Native('rustrover'),
+                 Flatpak('com.jetbrains.RustRover'),
+                 Toolbox('RustRover'))
+
+progs += Program('rustrover-eap', _('RustRover (EAP)'),
+                 Native('rustrover-eap'))
+
 progs += Program('webstorm', _('WebStorm'),
                  Native('webstorm'),
-                 Flatpak('com.jetbrains.WebStorm'))
+                 Flatpak('com.jetbrains.WebStorm'),
+                 Toolbox('WebStorm'))
 
 progs += Program('webstorm-eap', _('WebStorm (EAP)'),
                  Native('webstorm-eap'))
