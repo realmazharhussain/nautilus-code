@@ -176,7 +176,7 @@ class ProgramList (NamedList):
                 if include_type_name:
                     label += f' ({pkg.type_name})'
 
-                item = Nautilus.MenuItem.new(name, label)
+                item = Nautilus.MenuItem(name=name, label=label)
                 item.connect('activate', self._activate_item, command)
                 items.append(item)
 
