@@ -171,7 +171,11 @@ class ProgramList (NamedList):
             for pkg in installed_pkgs:
 
                 name = id_prefix + program.id
-                command = [*pkg.run_command, *program.arguments, path]
+                command = [*pkg.run_command, *program.arguments]
+                has_path_placeholder = any('{}' in arg for arg in command)
+                command = [arg.replace('{}', path) for arg in command]
+                if not has_path_placeholder:
+                    command.append(path)
                 label = _('Open in %s') % program.name
                 if include_type_name:
                     label += f' ({pkg.type_name})'
